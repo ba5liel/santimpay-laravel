@@ -75,7 +75,7 @@ class SantimPayDirect
             'generated' => $time
         );
 
-        $jwt = JWT::encode($data, $this->privateKey, 'ES256');
+        $jwt = JWT::encode($data, $this->private_key, 'ES256');
 
         return $jwt;
     }
