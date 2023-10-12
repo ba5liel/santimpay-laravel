@@ -45,7 +45,8 @@ class SantimPayDirect
             $body = $santimPayCheckoutRequest->jsonSerialize();
             $body['phone'] = $phone;
             $body['paymentMethod'] = $this->payment_method;
-            $body['signedToken'] = $this->generateSignedToken($santimPayCheckoutRequest->amount, $santimPayCheckoutRequest->merchantId, $this->payment_method, $phone);
+            $body['merchantId'] = $this->merchant_id;
+            $body['signedToken'] = $this->generateSignedToken($santimPayCheckoutRequest->amount, $this->merchant_id, $this->payment_method, $phone);
             $response = $this->http_client->post(SantimPay::API_VERSION . "/direct-payment", [
                 RequestOptions::JSON => $body,
             ]);

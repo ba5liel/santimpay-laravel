@@ -41,13 +41,14 @@ class SantimPayCheckout
         try {
 
             $body = $santimPayCheckoutRequest->jsonSerialize();
-            $body['signedToken'] = $this->generateSignedToken($santimPayCheckoutRequest->amount, $santimPayCheckoutRequest->merchantId);
+            $body['merchantId'] =  $this->merchant_id;
+            $body['signedToken'] = $this->generateSignedToken($santimPayCheckoutRequest->amount, $this->merchant_id);
             $response = $this->http_client->post(SantimPay::API_VERSION . "/initiate-payment", [
                 RequestOptions::JSON => $body,
             ]);
             $url = str_replace('\u0026', '&', $response->getBody()->getContents());
 
-        
+
             return SantimPayCheckoutResponse::fromJson($url);
         } catch (ConnectionErrorException $e) {
             throw new SantimPayNetworkException();
