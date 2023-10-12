@@ -45,7 +45,7 @@ class SantimPaySupport
                 throw new SantimPayNotFoundException($msg, $e);
             }
 
-            throw new SantimPayException($e->response->data["msg"], $e);
+            throw new SantimPayException(print_r($e->response, true), $e);
         } else {
             throw new SantimPayNetworkException($e);
         }
