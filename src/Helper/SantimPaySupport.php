@@ -28,8 +28,8 @@ class SantimPaySupport
                 $responseBodyAsString = $response->getBody()->getContents();
                 $msg = "Invalid Request, check your Request body.";
                 if (! empty($responseBodyAsString)) {
-                    $responseJson = json_decode($responseBodyAsString, true);
-                    $msg = $responseJson["msg"];
+                    // $responseJson = json_decode($responseBodyAsString, true);
+                    $msg = $responseBodyAsString;
                 }
 
                 throw new SantimPayBadRequestException($msg, $e);
@@ -38,8 +38,8 @@ class SantimPaySupport
                 $responseBodyAsString = $response->getBody()->getContents();
                 $msg = "Invalid Request, Not found.";
                 if (! empty($responseBodyAsString)) {
-                    $responseJson = json_decode($responseBodyAsString, true);
-                    $msg = $responseJson["msg"];
+                    // $responseJson = json_decode($responseBodyAsString, true);
+                    $msg = $responseBodyAsString;
                 }
 
                 throw new SantimPayNotFoundException($msg, $e);
