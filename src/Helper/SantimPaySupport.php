@@ -20,9 +20,12 @@ class SantimPaySupport
     public static function __handleException(ClientException $e)
     {
         $response = $e->getResponse();
+        $request = $e->getRequest();
+        $fullRequestedUrl = (string) $request->getUri();
         if ($response) {
             if ($response->getStatusCode() == 401) {
-                throw new SantimPayUnAuthorizedException('Invalid authentication credentials', $e);
+                
+                throw new SantimPayUnAuthorizedException('Invalid authentication credentials'. ' url: '. $fullRequestedUrl, $e);
             }
             if ($response->getStatusCode() === 400) {
                 $responseBodyAsString = $response->getBody()->getContents();
@@ -31,7 +34,7 @@ class SantimPaySupport
                     // $responseJson = json_decode($responseBodyAsString, true);
                     $msg = $responseBodyAsString;
                 }
-
+                $msg .= "</br>" . $fullRequestedUrl;
                 throw new SantimPayBadRequestException($msg, $e);
             }
             if ($response->getStatusCode() === 404) {
@@ -41,7 +44,7 @@ class SantimPaySupport
                     // $responseJson = json_decode($responseBodyAsString, true);
                     $msg = $responseBodyAsString;
                 }
-
+                $msg .= "</br>" . $fullRequestedUrl;
                 throw new SantimPayNotFoundException($msg, $e);
             }
 

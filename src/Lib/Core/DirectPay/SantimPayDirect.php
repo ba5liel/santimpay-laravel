@@ -42,7 +42,7 @@ class SantimPayDirect
 
         try {
 
-            $body = $santimPayCheckoutRequest->jsonSerialize();
+            $body = $santimPayCheckoutRequest->jsonSerialize(); 
             $body['phone'] = $phone;
             $body['paymentMethod'] = $this->payment_method;
             $body['merchantId'] = $this->merchant_id;
