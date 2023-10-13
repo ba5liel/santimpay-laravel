@@ -9,7 +9,6 @@ use GuzzleHttp\Client;
 class SantimPay
 {
     public $http_client;
-    public $token;
     public $merchant_id;
     public $private_key;
 
@@ -21,16 +20,14 @@ class SantimPay
     public $checkout;
     public $directPay;
 
-    public function __construct($token, $merchant_id, $private_key, $test = false)
+    public function __construct($merchant_id, $private_key, $test = false)
     {
-        $this->token = $token;
         $this->merchant_id = $merchant_id;
         $this->private_key = $private_key;
 
         $this->http_client = new Client([
             'base_uri' => $test? $this->DEFAULT_TEST_HOST : $this->DEFAULT_HOST,
             'headers' => [
-                "Authorization" => "Bearer $token",
                 "Content-Type" => "application/json; charset=UTF-8",
                 "Accepts" => "application/json",
             ],
