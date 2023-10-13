@@ -43,7 +43,7 @@ class SantimPayDirect
         try {
 
             $body = $santimPayCheckoutRequest->jsonSerialize(); 
-            $body['phone'] = $phone;
+            $body['phoneNumber'] = $phone;
             $body['paymentMethod'] = $this->payment_method;
             $body['merchantId'] = $this->merchant_id;
             $body['signedToken'] = $this->generateSignedToken($santimPayCheckoutRequest->amount, $this->merchant_id, $this->payment_method, $phone);
