@@ -13,6 +13,7 @@ class SantimPayCheckoutRequest implements JsonSerializable
     public $failureRedirectUrl;
     public $notifyUrl;
     public $cancelRedirectUrl;
+    public $direct;
 
     public function __construct(
         $id,
@@ -21,7 +22,8 @@ class SantimPayCheckoutRequest implements JsonSerializable
         $successRedirectUrl,
         $failureRedirectUrl,
         $notifyUrl,
-        $cancelRedirectUrl
+        $cancelRedirectUrl,
+        $direct = false
     ) {
         $this->id = $id;
         $this->amount = $amount;
@@ -30,10 +32,18 @@ class SantimPayCheckoutRequest implements JsonSerializable
         $this->failureRedirectUrl = $failureRedirectUrl;
         $this->notifyUrl = $notifyUrl;
         $this->cancelRedirectUrl = $cancelRedirectUrl;
+        $this->direct = $direct;
     }
 
     public function jsonSerialize()
     {
+        if($this->direct)
+        return [
+            'id' => $this->id,
+            'amount' => $this->amount,
+            'reason' => $this->paymentReason,
+            'notifyUrl' => $this->notifyUrl,
+        ];
         return [
             'id' => $this->id,
             'amount' => $this->amount,

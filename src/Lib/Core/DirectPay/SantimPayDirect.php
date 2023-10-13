@@ -41,12 +41,12 @@ class SantimPayDirect
         }
 
         try {
-
+            $santimPayCheckoutRequest->direct = true;
             $body = $santimPayCheckoutRequest->jsonSerialize(); 
             $body['phoneNumber'] = $phone;
             $body['paymentMethod'] = $this->payment_method;
             $body['merchantId'] = $this->merchant_id;
-            $body['signedToken'] = $this->generateSignedToken($santimPayCheckoutRequest->amount, $this->merchant_id, $this->payment_method, $phone);
+            $body['signedToken'] = $this->generateSignedToken($santimPayCheckoutRequest->amount, $this->paymentReason, $this->payment_method, $phone);
             $response = $this->http_client->post(SantimPay::API_VERSION . "/direct-payment", [
                 RequestOptions::JSON => $body,
             ]);
@@ -69,7 +69,7 @@ class SantimPayDirect
         $data = array(
             'amount' => $amount,
             'paymentMethod' => $paymentMethod,
-            'phone' => $phone,
+            'phoneNumber' => $phone,
             'paymentReason' => $paymentReason,
             'merchantId' => $this->merchant_id,
             'generated' => $time
