@@ -48,8 +48,19 @@ class SantimPayDirect
             $body['merchantId'] = $this->merchant_id;
             $body['signedToken'] = $this->generateSignedToken($santimPayCheckoutRequest->amount, $santimPayCheckoutRequest->paymentReason, $this->payment_method, $phone);
             
+            $payload = [
+                'id' => 'testid',
+                'amount' => 10,
+                'reason' => 'Selam.et Payment',
+                'notifyUrl' => 'https://webhook.site/00c7264f-f2d7-47be-b621-53144fa19968',
+                'phoneNumber' => '+251961186323',
+                'paymentMethod' => 'Telebirr',
+                'merchantId' => '9e2dab64-e2bb-4837-9b85-d855dd878d2b',
+                'signedToken' => 'eyJhbGciOiJFUzI1NiJ9.eyJhbW91bnQiOjEwLCJwYXltZW50TWV0aG9kIjoiVGVsZWJpcnIiLCJwaG9uZU51bWJlciI6IisyNTE5NjExODYzMjMiLCJwYXltZW50UmVhc29uIjoiU2VsYW0uZXQgUGF5bWVudCIsIm1lcmNoYW50SWQiOiI5ZTJkYWI2NC1lMmJiLTQ4MzctOWI4NS1kODU1ZGQ4NzhkMmIiLCJnZW5lcmF0ZWQiOjE2OTcxOTMxODh9.lr9ujmI0Gc7JtWjKL36ReQy6jYYsqnDpHjcO834tJlZw26saQRnScJoaYnKJC1OoQIxMU0uNajK3TBtOyxlKfg'
+            ];
+            
             $response = $this->http_client->post(SantimPay::API_VERSION . "/direct-payment", [
-                RequestOptions::JSON => $body,
+                RequestOptions::JSON => $payload,
             ]);
             $url = str_replace('\u0026', '&', $response->getBody()->getContents());
 
