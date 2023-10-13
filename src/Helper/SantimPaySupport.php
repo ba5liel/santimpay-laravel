@@ -21,17 +21,22 @@ class SantimPaySupport
     {
         $response = $e->getResponse();
         $request = $e->getRequest();
-        $requestBody = $request->getBody()->getContents();
-        $fullRequestedUrl = (string) $request->getUri() . "<br> request body: ". $requestBody;
+
+
+        $requestBodyStream = $e->getRequest()->getBody();
+        $requestBodyStream->rewind();  // Rewind the stream to the beginning
+        $requestBody = $requestBodyStream->getContents();
+
+        $fullRequestedUrl = (string) $request->getUri() . "<br> request body: " . $requestBody;
         if ($response) {
             if ($response->getStatusCode() == 401) {
-                
-                throw new SantimPayUnAuthorizedException('Invalid authentication credentials'. ' url: '. $fullRequestedUrl, $e);
+
+                throw new SantimPayUnAuthorizedException('Invalid authentication credentials' . ' url: ' . $fullRequestedUrl, $e);
             }
             if ($response->getStatusCode() === 400) {
                 $responseBodyAsString = $response->getBody()->getContents();
                 $msg = "Invalid Request, check your Request body.";
-                if (! empty($responseBodyAsString)) {
+                if (!empty($responseBodyAsString)) {
                     // $responseJson = json_decode($responseBodyAsString, true);
                     $msg = $responseBodyAsString;
                 }
@@ -41,7 +46,7 @@ class SantimPaySupport
             if ($response->getStatusCode() === 404) {
                 $responseBodyAsString = $response->getBody()->getContents();
                 $msg = "Invalid Request, Not found.";
-                if (! empty($responseBodyAsString)) {
+                if (!empty($responseBodyAsString)) {
                     // $responseJson = json_decode($responseBodyAsString, true);
                     $msg = $responseBodyAsString;
                 }
