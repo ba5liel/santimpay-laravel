@@ -21,7 +21,8 @@ class SantimPaySupport
     {
         $response = $e->getResponse();
         $request = $e->getRequest();
-        $fullRequestedUrl = (string) $request->getUri();
+        $requestBody = $request->getBody()->getContents();
+        $fullRequestedUrl = (string) $request->getUri() . "<br> request body: ". $requestBody;
         if ($response) {
             if ($response->getStatusCode() == 401) {
                 
