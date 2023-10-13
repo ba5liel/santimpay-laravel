@@ -15,7 +15,7 @@ class SantimPay
 
     public $DEFAULT_HOST = 'https://services.santimpay.com/api';
     public $DEFAULT_TEST_HOST = 'https://testnet.santimpay.com/api';
-    public const API_VERSION = '/v1/gateway';
+    public $API_VERSION = '/v1/gateway';
     public static $PACKAGE_VERSION = '1.0.0';
     public $DEFAULT_TIMEOUT = 1000 * 60 * 2;
     public $checkout;
