@@ -20,7 +20,7 @@ class SantimPayDirectPay
     {
         $this->http_client = $http_client;
         $this->telebirr = new SantimPayDirect($this->http_client, $merchant_id, $private_key, 'Telebirr');
-        $this->cbe = new SantimPayDirect($this->http_client, $merchant_id, $private_key, 'CBE Birr');
+        $this->cbe = new SantimPayDirect($this->http_client, $merchant_id, $private_key, 'CBEBirr');
         $this->mpesa = new SantimPayDirect($this->http_client, $merchant_id, $private_key, 'MPESA');
     }
 }
