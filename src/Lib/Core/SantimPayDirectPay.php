@@ -13,13 +13,14 @@ class SantimPayDirectPay
     public $http_client;
 
     public $telebirr;
-    public $awash;
-    public $awash_wallet;
+    public $cbe;
+    public $mpesa;
 
     public function __construct($http_client, $merchant_id, $private_key)
     {
         $this->http_client = $http_client;
         $this->telebirr = new SantimPayDirect($this->http_client, $merchant_id, $private_key, 'Telebirr');
         $this->cbe = new SantimPayDirect($this->http_client, $merchant_id, $private_key, 'CBE Birr');
+        $this->mpesa = new SantimPayDirect($this->http_client, $merchant_id, $private_key, 'MPESA');
     }
 }
