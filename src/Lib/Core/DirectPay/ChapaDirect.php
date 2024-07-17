@@ -15,6 +15,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\RequestOptions;
 use League\Flysystem\ConnectionErrorException;
+use SantimPay\SantimPay\Chapa;
 use SantimPay\SantimPay\Lib\ChapaRequest;
 use SantimPay\SantimPay\Lib\ChapaResponse;
 
@@ -42,13 +43,12 @@ class ChapaDirect
             $chapaRequest->direct = true;
             $body = $chapaRequest->jsonSerialize(); 
 
-            $response = $this->http_client->post(SantimPay::API_VERSION . "/charges", [
+            $response = $this->http_client->post(Chapa::API_VERSION . "/charges?type={$this->payment_method}", [
                 RequestOptions::JSON => $body,
             ]);
-            $url = str_replace('\u0026', '&', $response->getBody()->getContents());
-
-        
-            return ChapaResponse::fromJson($url);
+            $responseBody = $response->getBody()->getContents();
+            $responseArray = json_decode($responseBody, true);
+            return new ChapaResponse($responseArray);
         } catch (ConnectionErrorException $e) {
             throw new SantimPayNetworkException();
         } catch (ClientException $e) {
